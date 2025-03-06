@@ -1,8 +1,8 @@
-﻿using STI_Entrevista_03_03_2025.CQRS.Commands;
+﻿using Microsoft.AspNetCore.Mvc;
+using STI_Entrevista_03_03_2025.CQRS.Commands;
 using STI_Entrevista_03_03_2025.CQRS.DTOs;
 using STI_Entrevista_03_03_2025.CQRS.Interfaces;
 using STI_Entrevista_03_03_2025.CQRS.Queries;
-using Microsoft.AspNetCore.Mvc;
 
 namespace STI_Entrevista_03_03_2025.Controllers
 {
@@ -11,19 +11,23 @@ namespace STI_Entrevista_03_03_2025.Controllers
         ICommandHandler<UpdateCadastroVeiculoCommand> updateHandler,
         ICommandHandler<DeleteCadastroVeiculoCommand> deleteHandler,
         IQueryHandler<GetCadastroVeiculoByIdQuery, CadastroVeiculoDto> getByIdHandler,
-        IQueryHandler<GetAllCadastroVeiculosQuery, IEnumerable<CadastroVeiculoDto>> getAllHandler) : Controller
+        IQueryHandler<GetAllCadastroVeiculosQuery, IEnumerable<CadastroVeiculoDto>> getAllHandler,
+        IConfiguration configuration) : Controller
     {
         private readonly ICommandResultHandler<CreateCadastroVeiculoCommand, CadastroVeiculoDto> _createHandler = createHandler;
         private readonly ICommandHandler<UpdateCadastroVeiculoCommand> _updateHandler = updateHandler;
         private readonly ICommandHandler<DeleteCadastroVeiculoCommand> _deleteHandler = deleteHandler;
         private readonly IQueryHandler<GetCadastroVeiculoByIdQuery, CadastroVeiculoDto> _getByIdHandler = getByIdHandler;
         private readonly IQueryHandler<GetAllCadastroVeiculosQuery, IEnumerable<CadastroVeiculoDto>> _getAllHandler = getAllHandler;
+        private readonly IConfiguration configuration = configuration;
 
         #region Actions
 
         // GET: Cadastro
         public async Task<IActionResult> Index()
         {
+            ViewData["DbContext"] = configuration["DbContext"];
+
             return View(await _getAllHandler.Handle(GetAllCadastroVeiculosQuery.GET_ALL_CADASTRO_VEICULOS_QUERY));
         }
 

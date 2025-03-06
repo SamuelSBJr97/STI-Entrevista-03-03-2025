@@ -1,8 +1,8 @@
-﻿using STI_Entrevista_03_03_2025.CQRS.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using STI_Entrevista_03_03_2025.CQRS.DTOs;
 using STI_Entrevista_03_03_2025.CQRS.Interfaces;
 using STI_Entrevista_03_03_2025.CQRS.Queries;
 using STI_Entrevista_03_03_2025.DBModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace STI_Entrevista_03_03_2025.CQRS.Handlers.Queries
 {
